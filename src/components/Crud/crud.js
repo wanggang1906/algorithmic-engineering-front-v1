@@ -596,6 +596,7 @@ function CRUD(options) {
 }
 
 // hook VM
+// 注册通用的回调vm钩子
 function callVmHook(crud, hook) {
   if (crud.debug) {
     console.log('callVmHook: ' + hook)

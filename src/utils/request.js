@@ -11,7 +11,7 @@ const service = axios.create({
   timeout: Config.timeout // 请求超时时间
 })
 
-// request拦截器
+// request拦截器 - 接受客户机浏览器提交的数据
 service.interceptors.request.use(
   config => {
     if (getToken()) {
@@ -27,7 +27,7 @@ service.interceptors.request.use(
   }
 )
 
-// response 拦截器
+// response 拦截器 - 将服务器返回的数据发往浏览器
 service.interceptors.response.use(
   response => {
     const code = response.status
