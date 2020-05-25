@@ -105,7 +105,7 @@ export default {
         this.page = this.page - 1
       }
     },
-    // 查询方法
+    // 查询方法，crud的输入框查询按钮
     toQuery() {
       this.page = 0
       this.init()

@@ -3,7 +3,7 @@
     <!--工具栏-->
     <div class="head-container">
       <div v-if="crud.props.searchToggle">
-        <!-- 搜索 -->
+        <!-- 搜索 query.name是全局定义的属性-->
         <el-input v-model="query.name" clearable size="small" placeholder="输入部门名称搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <el-date-picker
           v-model="query.createTime"
@@ -111,12 +111,15 @@
 <script>
 import crudDept from '@/api/system/dept'
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css' // 引入css样式表
 import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
 import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
+
+// @crud - src/components/Crud
+// @ - src
 
 const defaultForm = { id: null, name: null, isTop: '1', subCount: 0, pid: null, deptSort: 999, enabled: 'true' }
 export default {
@@ -125,6 +128,11 @@ export default {
   cruds() {
     return CRUD({ title: '部门', url: 'api/dept', crudMethod: { ...crudDept }})
   },
+  // mixins - 混入，用来分发vue组件中可复用的功能(函数，属性等)
+  // presenter() - crud的主页，dom的渲染？？？
+  // header() - 头部
+  // form(defaultForm) - 表单的属性配置
+  // crud() - crud操作选择
   mixins: [presenter(), header(), form(defaultForm), crud()],
   // 设置数据字典
   dicts: ['dept_status'],
@@ -151,6 +159,7 @@ export default {
     }
   },
   methods: {
+    // 获取部门数据
     getDeptDatas(tree, treeNode, resolve) {
       const params = { pid: tree.id }
       setTimeout(() => {
@@ -191,6 +200,7 @@ export default {
           }
           return obj
         })
+        console.log(res)
       })
     },
     // 获取弹窗内部门数据

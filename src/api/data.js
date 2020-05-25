@@ -4,7 +4,7 @@ import qs from 'qs'
 // qs.stringify()将对象序列化成URL的形式，以？或&进行拼接
 // 前端传递的数据为一个对象时，可使用此方法转成字符串，从而可以用get方法请求
 
-// 请求数据
+// 请求数据，方法在具体的组件中进行调用，组装了具体的参数
 export function initData(url, params) {
   return request({
     url: url + '?' + qs.stringify(params, { indices: false }),

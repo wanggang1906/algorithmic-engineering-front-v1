@@ -65,7 +65,7 @@ function CRUD(options) {
     status: {
       add: CRUD.STATUS.NORMAL,
       edit: CRUD.STATUS.NORMAL,
-      // 添加或编辑状态
+      // 添加或编辑状态，弹框显示的属性值
       get cu() {
         if (this.add === CRUD.STATUS.NORMAL && this.edit === CRUD.STATUS.NORMAL) {
           return CRUD.STATUS.NORMAL
@@ -118,7 +118,7 @@ function CRUD(options) {
     delSuccessNotify() {
       crud.notify(crud.msg.del, CRUD.NOTIFICATION_TYPE.SUCCESS)
     },
-    // 搜索
+    // 搜索 - crud中搜索按钮触发
     toQuery() {
       crud.page.page = 1
       crud.refresh()
@@ -130,7 +130,7 @@ function CRUD(options) {
       }
       return new Promise((resolve, reject) => {
         crud.loading = true
-        // 请求数据
+        // 请求数据，data中是请求成功后服务器返回的数据，对data中的数据进行解构，去除响应的无关数据
         initData(crud.url, crud.getQueryParams()).then(data => {
           const table = crud.getTable()
           if (table.lazy) { // 懒加载子节点数据，清掉已加载的数据
@@ -326,6 +326,7 @@ function CRUD(options) {
     },
     /**
      * 通用导出
+     * 下载的数据文件
      */
     doExport() {
       crud.downloadLoading = true
@@ -347,6 +348,7 @@ function CRUD(options) {
       Object.keys(crud.params).length !== 0 && Object.keys(crud.params).forEach(item => {
         if (crud.params[item] === null || crud.params[item] === '') crud.params[item] = undefined
       })
+      // 返回查询的参数
       return {
         page: crud.page.page - 1,
         size: crud.page.size,
@@ -621,6 +623,7 @@ function callVmHook(crud, hook) {
   return ret
 }
 
+// 选择操作
 function mergeOptions(src, opts) {
   const optsRet = {
     ...src
@@ -653,6 +656,7 @@ function lookupCrud(vm, tag) {
 /**
  * crud主页
  */
+// presenter - crud主持者，提出者
 function presenter(crud) {
   if (crud) {
     console.warn('[CRUD warn]: ' + 'please use $options.cruds() { return CRUD(...) or [CRUD(...), ...] }')
@@ -664,10 +668,12 @@ function presenter(crud) {
         crud: this.crud
       }
     },
+    // vue生命周期，初始化之前
     beforeCreate() {
-      this.$crud = this.$crud || {}
+      this.$crud = this.$crud || {} //
       let cruds = this.$options.cruds instanceof Function ? this.$options.cruds() : crud
       if (!(cruds instanceof Array)) {
+        //  typeof 和 instanceof 常用来判断一个变量是否为空，或者是什么类型的
         cruds = [cruds]
       }
       cruds.forEach(ele => {
@@ -689,11 +695,13 @@ function presenter(crud) {
         }
       }
     },
+    // 销毁
     destroyed() {
       for (const k in this.$crud) {
         this.$crud[k].unregisterVM('presenter', this)
       }
     },
+    // 初始化后
     mounted() {
       // 如果table未实例化（例如使用了v-if），请稍后在适当时机crud.attchTable刷新table信息
       if (this.$refs.table !== undefined) {
@@ -777,6 +785,7 @@ function crud(options = {}) {
   const defaultOptions = {
     type: undefined
   }
+  // 返回crud的操作类型
   options = mergeOptions(defaultOptions, options)
   return {
     data() {

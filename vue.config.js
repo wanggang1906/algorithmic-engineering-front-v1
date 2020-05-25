@@ -46,7 +46,7 @@ module.exports = {
     name: name,
 
     // 源码映射
-    //可取值source-map，inline-source-map，inline-cheap-source-map，inline-cheap-module-source-map等等；这里使用source-map
+    // 可取值source-map，inline-source-map，inline-cheap-source-map，inline-cheap-module-source-map等等；这里使用source-map
     devtool: 'source-map',
 
     // 用符号代替路径
