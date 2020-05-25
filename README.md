@@ -33,3 +33,21 @@
 
 + js的钩子 - 一种匹配机制，在代码中设置一些钩子，然后程序执行时自动去匹配这些钩子，提高了程序的执行效率，避免了if-else的使用。如定义一个钩子列表(类似与字典),然后使用alert进行自动匹配。js是单线程的
 + vue对象的生命周期 https://www.csdn.net/gather_2c/MtTaAg3sMDEyNy1ibG9n.html
+
+
+
+
+
+
+
++ 一些网址
+
+https://github.com/521xueweihan/HelloGitHub/blob/master/content/33/HelloGitHub33.md
+
+http://noahsnail.com/2017/07/21/2017-07-21-GoogleNet%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/
+
+https://github.com/ruanyf/weekly
+
+https://docs.auauz.net/version/V2.4.html#%E6%8C%87%E5%8D%97
+
+https://www.bookstack.cn/read/eladmin-v1.7/0.md
