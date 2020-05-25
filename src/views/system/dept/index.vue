@@ -126,6 +126,9 @@ export default {
   name: 'Dept',
   components: { Treeselect, crudOperation, rrOperation, udOperation },
   cruds() {
+    // title - 接口名称，@Api的标签
+    // url - 后台接口rul
+    // crudMethod - crud.js中的crud方法，包含增(a)删(d)改(e)查(g)
     return CRUD({ title: '部门', url: 'api/dept', crudMethod: { ...crudDept }})
   },
   // mixins - 混入，用来分发vue组件中可复用的功能(函数，属性等)
