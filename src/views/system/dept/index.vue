@@ -121,6 +121,7 @@ import udOperation from '@crud/UD.operation'
 // @crud - src/components/Crud
 // @ - src
 
+// 默认表格绑定的数据对象
 const defaultForm = { id: null, name: null, isTop: '1', subCount: 0, pid: null, deptSort: 999, enabled: 'true' }
 export default {
   name: 'Dept',
@@ -128,7 +129,8 @@ export default {
   cruds() {
     // title - 接口名称，@Api的标签
     // url - 后台接口rul
-    // crudMethod - crud.js中的crud方法，包含增(a)删(d)改(e)查(g)
+    // crudMethod - crud.js中的crud方法定义的对象，包含增(a)删(d)改(e)查(g)的方法定义
+    // 具体调用那种方法在相应api文件中，其中定义了方法的请求类型，url，参数列表
     return CRUD({ title: '部门', url: 'api/dept', crudMethod: { ...crudDept }})
   },
   // mixins - 混入，用来分发vue组件中可复用的功能(函数，属性等)
@@ -137,11 +139,12 @@ export default {
   // form(defaultForm) - 表单的属性配置
   // crud() - crud操作选择
   mixins: [presenter(), header(), form(defaultForm), crud()],
-  // 设置数据字典
+  // 设置数据字典，为字典管理功能提供数据
   dicts: ['dept_status'],
   data() {
     return {
       depts: [],
+      // 数据验证
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
@@ -162,11 +165,16 @@ export default {
     }
   },
   methods: {
-    // 获取部门数据
+    // 选中一行，获取部门数据，根据行id(树id)查询后台
+    // params - 树，树节点，解析
     getDeptDatas(tree, treeNode, resolve) {
       const params = { pid: tree.id }
+      // setTimeout() - 指定特定时间后执行函数或表达式(js代码串)
       setTimeout(() => {
+        // .then()方法异步执行，就是当.then()前的方法执行完后再执行then()内部的程序，这样就避免了，数据没获取到等的问题
         crudDept.getDepts(params).then(res => {
+          // setTimeout中成功的时候调用resolve，失败的时候调用reject，此处是拿到返回的数据
+          console.log(res.content) // 具体返回的所有内容，包含其他信息
           resolve(res.content)
         })
       }, 100)

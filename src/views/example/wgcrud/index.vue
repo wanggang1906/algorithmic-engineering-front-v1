@@ -3,24 +3,22 @@
     <P>请求后台的数据</P>
     <el-button v-model="query.name" clearable size="small" placeholder="输入搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
 
+      <!-- 点击时获取后台数据到表格 -->
+      <el-button @click="getDataOfServe">点击获取数据</el-button>
     <div>
       <el-table
+        ref="table"
         :data="crud.data"
-        style="width: 100%"
-        :load="getDataOfServe"
       >
-        <el-table-column
-          prop="date"
-          label="日期"
-          width="180"
-        />
+        <el-table-column label="id" prop="id" />
+        <el-table-column label="name" prop="name" />
       </el-table>
     </div>
   </div>
 </template>
 
 <script>
-import crudDept from '@/api/system/dept'
+import crudWgcrud from '@/api/example/wgcrud/crudWgcrud'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
@@ -31,13 +29,14 @@ import udOperation from '@crud/UD.operation'
 
 import request from '@/utils/request'
 
-// const defCrud = {}
+const defaultForm = { id: null, name: null }
 
 export default {
   name: 'Wgcrud',
   cruds() {
-    return CRUD({ title: '测试', url: 'api/self', crudMethod: { ...crudDept }})
+    return CRUD({ title: '测试', url: 'api/self', crudMethod: { ...crudWgcrud }})
   },
+  mixins: [presenter(), header(), form(defaultForm), crud()],
   data() {
     return {
 
@@ -46,20 +45,19 @@ export default {
   methods: {
     // 获取后台数据
     getDataOfServe(resolve) {
-      const params = { }
+      const params = { id: 1 }
       setTimeout(() => {
-        this.getQuestType(params).then(res => {
+        crudWgcrud.getData(params).then(res => {
           resolve(res.content)
         })
       }, 100)
     },
-    // 请求方式
-    getQuestType(params) {
-      return request({
-        url: 'api/dept',
-        method: 'get',
-        params
-      })
+    [CRUD.HOOK.beforeRefresh]() {
+      const query = this.query
+      if (query.type && query.value) {
+        this.crud.params[query.type] = query.value
+      }
+      return true
     }
   }
 }
