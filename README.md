@@ -51,3 +51,28 @@ https://github.com/ruanyf/weekly
 https://docs.auauz.net/version/V2.4.html#%E6%8C%87%E5%8D%97
 
 https://www.bookstack.cn/read/eladmin-v1.7/0.md
+
+
+
+
+
+
+
+
+
+
+
++ 项目
+
+edms - 数据源管理服务，各个管理功能分为单独的服务，简化配置，便于扩展，升级
+udsp - 服务治理，注册，管理，授权，限流等
+contion - 接口连接管理，http,socket,webServer,等
+定制化 - 无公共东西
+配置化 - 有公共东西可以提取
+
+
+
+
+
+
+
