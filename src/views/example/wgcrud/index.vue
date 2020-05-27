@@ -45,7 +45,7 @@ export default {
   methods: {
     // 获取后台数据
     getDataOfServe(resolve) {
-      const params = { id: 1 }
+      const params = {}
       setTimeout(() => {
         crudWgcrud.getData(params).then(res => {
           resolve(res.content)
