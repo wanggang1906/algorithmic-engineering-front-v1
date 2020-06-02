@@ -1,3 +1,8 @@
+
+/**
+ *  需要放行的url
+ *  不需要token ???
+ *  */
 const baseUrl = process.env.VUE_APP_BASE_API
 const api = {
   state: {

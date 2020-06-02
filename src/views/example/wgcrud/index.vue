@@ -3,8 +3,8 @@
     <P>请求后台的数据</P>
     <el-button v-model="query.name" clearable size="small" placeholder="输入搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
 
-      <!-- 点击时获取后台数据到表格 -->
-      <el-button @click="getDataOfServe">点击获取数据</el-button>
+    <!-- 点击时获取后台数据到表格 -->
+    <el-button @click="getDataOfServe">点击获取数据</el-button>
     <div>
       <el-table
         ref="table"
