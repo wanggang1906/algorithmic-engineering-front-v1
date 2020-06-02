@@ -16,15 +16,6 @@ export function getMenus(params) {
   })
 }
 
-/*export function getMenuSuperior(ids) {
-  const params = {
-    ids: ids
-  }
-  return request({
-    url: 'api/menus/superior?' + qs.stringify(params, { indices: false }),
-    method: 'get'
-  })
-}*/
 export function getMenuSuperior(ids) {
   console.log(ids.length)
   const data = ids.length || ids.length === 0 ? ids : Array.of(ids)
