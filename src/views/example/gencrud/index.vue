@@ -75,6 +75,7 @@ export default {
           { required: true, message: 'ID不能为空', trigger: 'blur' }
         ]
       },
+      // 查询类型字段选择，整个页面的数据由value持有
       queryTypeOptions: [
         { key: 'id', display_name: 'ID' },
         { key: 'name', display_name: '名字' }
