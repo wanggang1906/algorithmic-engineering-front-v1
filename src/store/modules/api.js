@@ -1,7 +1,7 @@
 
 /**
  *  需要放行的url
- *  不需要token ???
+ *  不需要token，也需要token
  *  */
 const baseUrl = process.env.VUE_APP_BASE_API
 const api = {

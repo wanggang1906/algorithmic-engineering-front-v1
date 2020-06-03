@@ -42,7 +42,7 @@
         </el-tooltip>
       </crudOperation>
     </div>
-    <!--上传图片-->
+    <!--上传图片弹框 -->
     <el-dialog :visible.sync="dialog" :close-on-click-modal="false" append-to-body width="600px" @close="doSubmit">
       <el-upload
         :on-preview="handlePictureCardPreview"
@@ -135,6 +135,8 @@ export default {
     this.crud.optShow.edit = false
   },
   methods: {
+    // 上传成功后，把返回的response中的id放入表格数据中
+    // response包含后台响应的对象数据，包括图片的外网url，大小等
     handleSuccess(response, file, fileList) {
       const uid = file.uid
       const id = response.id
