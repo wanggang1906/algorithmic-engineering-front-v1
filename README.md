@@ -2,6 +2,48 @@
 
 
 
+
+
+
+
+
+## crud过程
+ #### 个文件的功能
+  + CRUD/crud.js - crud配置，定义的数据，方法，通知，添加,编辑,修改,删除,下载等方法，
+  + CRUD/CRUD.operation.vue
+  + CRUD/Pagination.vue - 分页
+  + CRUD/RR.operation.vue - 搜索与重置
+  + CRUD/UD.operation.vue -  删除弹框及通知
+  + minxins/crud.js - 可通用的crud方法，直接使用，不需要重复定义
+ #### crud表格
+  + 数据从后台拿到后要放入crud.data才能使用平台的表格进行渲染
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### 目录命名
     + 所有页面文件都在views下，页面和模块不能以crud命名，会出现名称重复，从而产生错误
     + components - 写与业务无关的组件，如树形组件，若跟业务有关系，则在相应的目录下键components目录

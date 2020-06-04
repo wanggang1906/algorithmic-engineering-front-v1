@@ -118,16 +118,25 @@ function CRUD(options) {
     delSuccessNotify() {
       crud.notify(crud.msg.del, CRUD.NOTIFICATION_TYPE.SUCCESS)
     },
-    // 搜索 - crud中搜索按钮触发
+    // 搜索 - crud中通用的搜索按钮
     toQuery() {
       crud.page.page = 1
       crud.refresh()
     },
     // 刷新
     refresh() {
+      // crud
       if (!callVmHook(crud, CRUD.HOOK.beforeRefresh)) {
         return
       }
+      // promise使用详解 - https://blog.csdn.net/wsh596823919/article/details/81735387
+      // 创建一个promise实例
+      // 接受一个函数作为参数，函数的两个参数resolve,reject是两个函数，由js引擎提供
+      // resolve函数的作用是，将Promise对象的状态从“未完成”变为“成功”（即从Pending变为Resolved），在异步操作成功时调用，并
+      // 将异步操作的结果，作为参数传递出去
+      // reject函数的作用是，将Promise对象的状态从“未完成”变为“失败”（即从Pending变为Rejected），在异步操作失败时调用，并将
+      // 异步操作报出的错误，作为参数传递出去
+      // Promise实例生成以后，可以用then方法分别指定Resolved（then成功）状态和Reject（then失败）状态的回调函数
       return new Promise((resolve, reject) => {
         crud.loading = true
         // 请求数据，data中是请求成功后服务器返回的数据，对data中的数据进行解构，去除响应的无关数据
@@ -138,6 +147,7 @@ function CRUD(options) {
             table.store.states.lazyTreeNodeMap = {}
           }
           crud.page.total = data.totalElements
+          // 把返回的数据组装到crud.data，以便让表格可以渲染
           crud.data = data.content
           crud.resetDataStatus()
           // time 毫秒后显示表格
