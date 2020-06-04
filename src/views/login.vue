@@ -73,9 +73,10 @@ export default {
   watch: {
     $route: {
       handler: function(route) {
+        // 路由重定向
         this.redirect = route.query && route.query.redirect
       },
-      immediate: true
+      immediate: true // 立即
     }
   },
   created() {

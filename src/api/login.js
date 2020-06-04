@@ -20,6 +20,7 @@ export function getInfo() {
   })
 }
 
+// 获取图片验证码
 export function getCodeImg() {
   return request({
     url: 'auth/code',
