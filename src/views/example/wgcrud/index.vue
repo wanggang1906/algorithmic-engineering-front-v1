@@ -146,6 +146,54 @@
         </div>
       </el-main>
     </div>
+
+    <!-- 下拉列表框 -->
+    <div>
+      <el-dropdown split-button type="primary" @command="handleCommand">
+
+        <el-input v-model="input" placeholder="请输入内容" />
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item v-for="(ce,index) in kuList" :key="index" :command="ce">{{ ce }}</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+    <!-- select选择框 -->
+    <div>
+      <el-select v-model="value" clearable placeholder="请选择">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+    </div>
+    <!-- select嵌套tree-->
+    <div>
+      <el-select v-model="mineStatus" placeholder="请选择" multiple collapse-tags @change="selectChange">
+        <el-option :value="mineStatusValue" style="height: auto">
+          <!-- option展开高度太小，把height设置为auto就好啦 -->
+          <el-tree ref="tree" :data="data" show-checkbox node-key="id" highlight-current :props="defaultProps" @check-change="handleCheckChange" />
+        </el-option>
+      </el-select>
+    </div>
+    <!-- select嵌套表单 -->
+    <div>
+      <el-select v-model="mineStatus" placeholder="请选择" multiple collapse-tags @change="selectChange">
+        <el-option :value="mineStatusValue" style="height: auto">
+          <!-- option展开高度太小，把height设置为auto就好啦 -->
+          <el-form>
+            <el-form-item>
+              <span>dd</span>
+            </el-form-item>
+            <el-form-item>
+              <span>dd</span>
+            </el-form-item>
+          </el-form>
+        </el-option>
+      </el-select>
+    </div>
+    <div>
+      <P>------------------------------------------</P>
+      <P>------------------------------------------</P>
+      <P>------------------------------------------</P>
+      <P>------------------------------------------</P>
+    </div>
   </div>
 </template>
 
@@ -230,6 +278,76 @@ export default {
         { 'name': '3x3模式', 'value': '4' },
         { 'name': '1+5模式', 'value': '5' }
       ],
+      // 下拉列表
+      kuList: [
+        { ce: 1, index: 2 },
+        { ce: 1, index: 2 }
+      ],
+      // select选择框
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      value: '',
+      // select嵌套tree
+      mineStatus: '',
+      mineStatusValue: [],
+      data: [
+        {
+          id: 1,
+          label: '一级 1',
+          children: [
+            {
+              id: 4,
+              label: '二级 1-1'
+            }
+          ]
+        },
+        {
+          id: 2,
+          label: '一级 2',
+          children: [
+            {
+              id: 5,
+              label: '二级 2-1'
+            },
+            {
+              id: 6,
+              label: '二级 2-2'
+            }
+          ]
+        },
+        {
+          id: 3,
+          label: '一级 3',
+          children: [
+            {
+              id: 7,
+              label: '二级 3-1'
+            },
+            {
+              id: 8,
+              label: '二级 3-2'
+            }
+          ]
+        }
+      ],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
 
       s: ''
     }
@@ -308,7 +426,44 @@ export default {
     submitUpload() {
       this.$refs.upload.submit()
       console.log('点击提交')
+    },
+    //  下拉列表组件
+    handleClick() {
+      alert('button click')
+    },
+    // 下拉列表点击触发通知
+    handleCommand(command) {
+      this.$message('click on item ' + command)
+    },
+    // select嵌套tree
+    // select框值改变时候触发的事件
+    selectChange(e) {
+      var arrNew = []
+      var dataLength = this.mineStatusValue.length
+      var eleng = e.length
+      for (let i = 0; i < dataLength; i++) {
+        for (let j = 0; j < eleng; j++) {
+          if (e[j] === this.mineStatusValue[i].label) {
+            arrNew.push(this.mineStatusValue[i])
+          }
+        }
+      }
+      this.$refs.tree.setCheckedNodes(arrNew)// 设置勾选的值
+    },
+    handleCheckChange() {
+      const res = this.$refs.tree.getCheckedNodes(true, true) // 这里两个true，1. 是否只是叶子节点 2. 是否包含半选节点（就是使得选择的时候不包含父节点）
+      const arrLabel = []
+      const arr = []
+      res.forEach(item => {
+        arrLabel.push(item.label)
+        arr.push(item)
+      })
+      this.mineStatusValue = arr
+      this.mineStatus = arrLabel
+      console.log('arr:' + JSON.stringify(arr))
+      console.log('arrLabel:' + arrLabel)
     }
+
   }
 }
 </script>
@@ -422,5 +577,15 @@ export default {
     margin-top: 80px;
 
 }
+
+    .el-dropdown {
+        vertical-align: top;
+    }
+    .el-dropdown + .el-dropdown {
+        margin-left: 15px;
+    }
+    .el-icon-arrow-down {
+        font-size: 12px;
+    }
 
 </style>
